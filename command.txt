@@ -1,0 +1,47 @@
+====================================================================
+LOCAL NETWORK RECONNAISSANCE & VULNERABILITY ASSESSMENT LAB
+Commands & Execution Reference File
+====================================================================
+
+--- PHASE 1: INTERFACE & LOCAL NETWORK SETUP ---
+1. Check Kali Linux network interface and IP configuration:
+   ifconfig
+   # (Alternative: ip a)
+
+2. Test connectivity to the target machine (replace with target IP):
+   ping 192.168.1.10
+
+
+--- PHASE 2: HOST DISCOVERY (Finding Active IPs on Subnet) ---
+3. Perform an Nmap ping sweep across the local subnet to find live hosts:
+   sudo nmap -sn 192.168.1.0/24
+
+4. Alternative ARP broadcast scan for fast local discovery:
+   sudo arp-scan --localnet
+
+5. Alternative active netdiscover scan:
+   sudo netdiscover -r 192.168.1.0/24
+
+
+--- PHASE 3: PORT SCANNING & SERVICE FINGERPRINTING ---
+6. Run an aggressive scan to detect OS, open ports, and service versions:
+   sudo nmap -A 192.168.1.10
+
+7. Run a targeted service version detection scan:
+   sudo nmap -sV 192.168.1.10
+
+8. Run an OS fingerprinting scan:
+   sudo nmap -O 192.168.1.10
+
+
+--- PHASE 4: VULNERABILITY ASSESSMENT ---
+9. Scan the target specifically for the MS17-010 (EternalBlue) vulnerability:
+   sudo nmap --script smb-vuln-ms17-010 192.168.1.10
+
+
+--- PHASE 5: CONTROLLED LOCAL EXPLOITATION (METASPLOIT) ---
+10. Launch the Metasploit Framework console:
+    msfconsole
+
+11. Search for the relevant exploit module inside Metasploit:
+    search ms17_010
